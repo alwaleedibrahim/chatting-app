@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 require("dotenv").config()
+const {auth, socketAuth} = require("./middlewares/auth")
 
 require("./models/db/dbConnection")
 const userRouter = require("./routes/users")
@@ -27,12 +28,22 @@ const io = socket(server, {
   },
 });
 
+io.engine.use((req, res, next) => {
+  const isHandshake = req._query.sid === undefined;
+  if (!isHandshake) {
+    return next();
+  }
+  socketAuth(req, res, next)
+});
+
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  const email= socket.request.user.email
+  console.log(email ," connected");
 
   socket.on("private message", async ({ sender, recipient, message }) => {
     io.to(recipient).emit("private message", {
       sender,
+      recipient,
       message,
     });
   });

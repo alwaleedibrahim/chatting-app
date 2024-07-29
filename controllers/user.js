@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       "7d"
     );
-    res.status(200).json({ token, refreshToken });
+    res.status(200).json({ token, refreshToken , user: { email: user.email, id: user._id }});
   } catch (err) {
     console.log(err);
     return res.status(400).json({ status: "failed", message: err.message });

@@ -1,17 +1,19 @@
-const socket = io();
+const myToken = sessionStorage.getItem("token");
+const myEmail = sessionStorage.getItem("email");
+const socket = io({
+  extraHeaders: {
+    authorization: `${myToken}`,
+  },
+});
 
 const form = document.getElementById("form");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 const recipient = document.getElementById("recipient");
-const sender = document.getElementById("sender");
 
-// Join the room with the user's username
-sender.addEventListener("blur", () => {
-  if (sender.value) {
-    socket.emit("join", sender.value);
-  }
-});
+if (myEmail) {
+  socket.emit("join", myEmail);
+}
 
 // Receive private messages
 socket.on("private message", (msg) => {
@@ -30,9 +32,10 @@ function addMessage(msg) {
 // Send message on form submit
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (input.value && recipient.value && sender.value) {
+  if (input.value && recipient.value && myEmail) {
+    console.log("!!!emit");
     const msg = {
-      sender: sender.value,
+      sender: myEmail,
       recipient: recipient.value,
       message: input.value,
     };
