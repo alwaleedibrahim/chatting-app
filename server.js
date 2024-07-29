@@ -3,13 +3,15 @@ const cors = require("cors")
 require("dotenv").config()
 
 require("./models/db/dbConnection")
+const userRouter = require("./routes/users")
 
 const app = express()
 
 app.use(cors())
-
+app.use(express.json())
 
 app.use('/static', express.static('static'));
+app.use("/", userRouter)
 
 ///socket
 
