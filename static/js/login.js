@@ -23,7 +23,7 @@ form.addEventListener("submit", (e) => {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("refreshToken", data.refreshToken);
         sessionStorage.setItem("user_id", data.user.id);
-        sessionStorage.setItem("email", data.user.email);
+        sessionStorage.setItem("username", data.user.username);
         window.open(
           "chat.html", "_self"
         ); 
