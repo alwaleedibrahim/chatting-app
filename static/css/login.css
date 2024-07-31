@@ -9,7 +9,7 @@ body {
     height: 100vh;
   }
   
-  #login-form {
+  .form {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 10px;
@@ -26,7 +26,8 @@ body {
   }
   
   input[type="text"],
-  input[type="password"] {
+  input[type="password"],
+  input[type="email"] {
     width: 100%;
     border: 1px solid #cccccc;
     padding: 10px;

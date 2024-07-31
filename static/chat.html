@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html><head>
+  <script>
+    if (!sessionStorage.getItem("token")) {
+      window.open("login.html", "_self")
+    }
+  </script>
     <title>Private Chat App</title>
     <link rel="stylesheet" href="css/chat.css">
   </head>
   <body>
+
+    <aside>
+
+    </aside>
     <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="recipient" autocomplete="off" placeholder="Recipient"><br>
+      <input id="recipient" autocomplete="off" placeholder="Recipient" >
       <input id="input" autocomplete="off">
       <button>Send</button>
     </form>

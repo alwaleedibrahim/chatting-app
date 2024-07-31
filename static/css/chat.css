@@ -1,103 +1,60 @@
-/* form {
-  position: fixed;
-  bottom: 0;
-} */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f2f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #e5ddd5;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
-
 #messages {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   overflow-y: auto;
   flex-grow: 1;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
 }
-
 #messages li {
-  padding: 10px 15px;
+  padding: 8px 12px;
   margin-bottom: 10px;
-  background-color: #e9eaf6;
-  border-radius: 18px;
-  max-width: 70%;
-  word-wrap: break-word;
+  background-color: #fff;
+  border-radius: 7.5px;
+  max-width: 60%;
+  clear: both;
 }
-
-#messages li:nth-child(odd) {
+#messages li.from-you {
+  float: right;
   background-color: #dcf8c6;
-  margin-left: auto;
 }
-
+#messages li {
+  float: left;
+}
 #form {
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-input {
-  border: 1px solid #cccccc;
+  background-color: #f0f0f0;
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
-
-#input {
-  flex-grow: 1;
-  margin-right: 10px;
-}
-
-button {
-  background-color: #4CAF50;
-  color: white;
+#input, #recipient {
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  flex-grow: 1;
+}
+#recipient {
+  flex-grow: 0;
+  width: 120px;
+}
+button {
+  background-color: #128C7E;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50%;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #45a049;
-}
-
-@media (min-width: 768px) {
-  body {
-    padding: 40px;
-  }
-
-  #form {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  #recipient {
-    width: 200px;
-    margin-right: 10px;
-    margin-bottom: 0;
-  }
-
-  label {
-    margin-right: 10px;
-    margin-bottom: 0;
-  }
+#info {
+  color: red;
 }

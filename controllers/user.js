@@ -3,36 +3,32 @@ const bcrypt = require("bcryptjs");
 const UsersModel = require("../models/users");
 
 exports.create = async (req, res) => {
-  console.log(req.body)
-  const { email, password, name } = req.body;
-  if (!email || !password || !name) {
-    return res.status(400).json({ status: "failed", message: err.message });
+  const { email, password, username } = req.body;
+  if (!email || !password || !username) {
+    return res.status(400).json({ status: "failed", message: "invalid data" });
   }
 
   try {
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(password, salt, async function (err, hash) {
-        req.body.password = hash;
-        await UsersModel.create(req.body);
-        res.status(201).json({ status: "success" });
-      });
-    });
+    await UsersModel.create(req.body);
+    res.status(201).json({ status: "success" });
   } catch (err) {
     res.status(400).json({ status: "failed", message: err.message });
   }
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ status: "failed", message: err.message });
+  const { identifier, password } = req.body;
+  if (!identifier || !password) {
+    return res.status(400).json({ status: "failed", message: "invalid login" });
   }
   try {
-    const user = await UsersModel.findOne({ email });
+    const user = await UsersModel.findOne({
+      $or: [{ email: identifier }, { username: identifier }],
+    });
     if (!user) {
       return res
         .status(404)
-        .json({ status: "not found", message: "user not found" });
+        .json({ status: "failed", message: "user not found" });
     }
     let isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
@@ -50,10 +46,20 @@ exports.login = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       "7d"
     );
-    res.status(200).json({ token, refreshToken , user: { email: user.email, id: user._id }});
+    res
+      .status(200)
+      .json({ token, refreshToken, user: { email: user.email, id: user._id } });
   } catch (err) {
-    console.log(err);
     return res.status(400).json({ status: "failed", message: err.message });
+  }
+};
+
+exports.getContacts = async (req, res) => {
+  try {
+    const user = await UsersModel.findById(req.user.id);
+    res.json({message:"success", data: user.contacts});
+  } catch (err) {
+    res.status(500).json({message:"Something went wrong"})
   }
 };
 

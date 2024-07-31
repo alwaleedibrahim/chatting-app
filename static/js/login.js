@@ -1,4 +1,5 @@
-const form = document.getElementById("login-form")
+const info = document.querySelector("#info")
+const form = document.querySelector("form")
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const login = "http://localhost:3000/login";
@@ -10,18 +11,18 @@ form.addEventListener("submit", (e) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: form.email.value,
+      identifier: form.identifier.value,
       password: form.password.value,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      if (data.error) {
-        alert("Error Password or Username");
+      if (data.status == "failed") {
+        info.textContent = `${data.message}`
       } else {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("refreshToken", data.refreshToken);
+        sessionStorage.setItem("user_id", data.user.id);
         sessionStorage.setItem("email", data.user.email);
         window.open(
           "chat.html", "_self"
@@ -29,6 +30,6 @@ form.addEventListener("submit", (e) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      info.textContent = `${err}`
     });
 });

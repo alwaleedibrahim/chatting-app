@@ -1,18 +1,24 @@
-const mongoose =require("mongoose")
+const mongoose = require("mongoose");
+const usersModel = require("./../models/users");
 
-const MessagesSchema = new mongoose.Schema({
+const MessagesSchema = new mongoose.Schema(
+  {
     sender: {
-        type: mongoose.Types.ObjectId,
-        required: true,
+      type: mongoose.Types.ObjectId,
+      ref: 'Users',
+      required: true,
     },
-    receiver: {
-        type: mongoose.Types.ObjectId,
-        required: true,
+    recipient: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Users',
+      required: true,
     },
     message: {
-        type:String,
-        required: true
-    }
-}, {timestamps:true})
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("Messages", MessagesSchema)
+module.exports = mongoose.model("Messages", MessagesSchema);
