@@ -15,17 +15,12 @@ const UsersSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  contacts: {
-    type: [
-      {
-        user_id: {
-          type: mongoose.Types.ObjectId,
-          ref: "Users",
-        },
-      },
-    ],
-    default: [],
-  },
+  contacts: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Users",
+    },
+  ],
 });
 
 UsersSchema.pre("save", function (next) {
