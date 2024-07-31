@@ -24,7 +24,7 @@ exports.socketAuth = (req, res, next) => {
 
   jwt.verify(header, process.env.TOKEN_SECRET, (err, decoded) => {
     if (err) {
-      return next(new Error("invalid token"));
+      return next(new Error("Invalid token"));
     }
 
     req.user = decoded;
