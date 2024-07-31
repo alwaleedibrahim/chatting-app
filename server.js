@@ -35,8 +35,8 @@ io.engine.use((req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  const { email, id } = socket.request.user;
-  console.log(email, " connected");
+  const { username, id } = socket.request.user;
+  console.log(username, " connected");
 
   socket.on("private message", async ({ sender, recipient, message }) => {
     await messages.newMessage({ sender, recipient, message });
@@ -47,8 +47,8 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("join", (email) => {
-    socket.join(email);
+  socket.on("join", (username) => {
+    socket.join(username);
   });
 
   socket.on("disconnect", () => {
