@@ -3,8 +3,8 @@ const UsersModel = require("./../models/users");
 
 exports.newMessage = async (message) => {
   try {
-    const sender = await UsersModel.findOne({ email: message.sender });
-    const recipient = await UsersModel.findOne({ email: message.recipient });
+    const sender = await UsersModel.findOne({ username: message.sender });
+    const recipient = await UsersModel.findOne({ username: message.recipient });
     if (!sender || !recipient) {
       throw new Error("invalid message data");
     }
@@ -13,10 +13,10 @@ exports.newMessage = async (message) => {
     await MessageModel.create(message);
 
     await UsersModel.findByIdAndUpdate(sender._id, {
-      $push: { contacts: { user_id: recipient._id } },
+      $addToSet: { contacts: recipient._id  },
     });
     await UsersModel.findByIdAndUpdate(recipient._id, {
-      $push: { contacts: { user_id: sender._id } },
+      $addToSet: { contacts: sender._id },
     });
   } catch (e) {
     console.log(e.message);

@@ -37,18 +37,18 @@ exports.login = async (req, res) => {
         .json({ status: "failed", message: "invalid password" });
     }
     const token = generateToken(
-      { email: user.email, id: user._id },
+      { username: user.username, id: user._id },
       process.env.TOKEN_SECRET,
       "1h"
     );
     const refreshToken = generateToken(
-      { email: user.email, id: user._id },
+      { username: user.username, id: user._id },
       process.env.REFRESH_TOKEN_SECRET,
       "7d"
     );
     res
       .status(200)
-      .json({ token, refreshToken, user: { email: user.email, id: user._id } });
+      .json({ token, refreshToken, user: { username: user.username, id: user._id } });
   } catch (err) {
     return res.status(400).json({ status: "failed", message: err.message });
   }
@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
 
 exports.getContacts = async (req, res) => {
   try {
-    const user = await UsersModel.findById(req.user.id);
+    const user = await UsersModel.findById(req.user.id).populate({path:"contacts", select:"username -_id"})
     res.json({message:"success", data: user.contacts});
   } catch (err) {
     res.status(500).json({message:"Something went wrong"})
