@@ -12,7 +12,7 @@ exports.newMessage = async (message) => {
     message.sender = sender._id;
     message.recipient = recipient._id;
     await MessageModel.create(message);
-    addToContacts(sender, recipient)
+    await addToContacts(sender, recipient)
   } catch (e) {
     console.log(e.message);
   }
