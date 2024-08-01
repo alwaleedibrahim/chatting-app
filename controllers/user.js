@@ -64,10 +64,14 @@ exports.getContacts = async (req, res) => {
 };
 
 exports.addToContacts = async (sender, recipient)=> {
-  sender.contacts.addToSet(recipient._id)
-  await sender.save()
-  recipient.contacts.addToSet(sender._id)
-  await recipient.save()
+  try {
+    sender.contacts.addToSet(recipient._id)
+    await sender.save()
+    recipient.contacts.addToSet(sender._id)
+    await recipient.save()
+  } catch (err) {
+    console.error(err.message)
+  }
 }
 
 exports.findOne = async (query) => {
