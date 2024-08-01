@@ -1,5 +1,5 @@
 const myToken = sessionStorage.getItem("token");
-const contactList = document.getElementById("contact-list");
+const contactList = document.querySelector(".contact-list");
 
 const url = "http://localhost:3000/contacts";
 
@@ -18,9 +18,11 @@ fetch(url, {
        const  contacts = value.data
       if (contacts) console.log(contacts);
         for (let element of contacts) {
-          const li = document.createElement("li");
-          li.innerHTML = `<span>${element.username[0].toUppercase()}</span><a href=chat.html?to=${element.username}>${element.username}</a>`;
-          contactList.appendChild(li);
+          if(element.username) {
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${element.username[0].toUpperCase()}</span><a href=chat.html?to=${element.username}>${element.username}</a>`;
+            contactList.appendChild(li);
+          }
         }
     });
   })
