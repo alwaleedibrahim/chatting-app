@@ -24,12 +24,16 @@ const UsersSchema = new mongoose.Schema({
 });
 
 UsersSchema.pre("save", function (next) {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(this.password, salt, async (err, hash) => {
-      this.password = hash;
-      next();
+  if (this.isModified("password")) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(this.password, salt, async (err, hash) => {
+        this.password = hash;
+        next();
+      });
     });
-  });
+  } else {
+    next()
+  }
 });
 
 module.exports = mongoose.model("Users", UsersSchema);
