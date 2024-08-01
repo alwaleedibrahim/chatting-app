@@ -19,7 +19,7 @@ fetch(url, {
       if (contacts) console.log(contacts);
         for (let element of contacts) {
           const li = document.createElement("li");
-          li.innerHTML = `<a href=chat.html?to=${element.username}>${element.username}</a>`;
+          li.innerHTML = `<span>${element.username[0].toUppercase()}</span><a href=chat.html?to=${element.username}>${element.username}</a>`;
           contactList.appendChild(li);
         }
     });
