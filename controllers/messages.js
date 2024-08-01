@@ -1,5 +1,6 @@
 const MessageModel = require("./../models/messages");
 const UsersModel = require("./../models/users");
+const {addToContacts} = require("./user")
 
 exports.newMessage = async (message) => {
   try {
@@ -11,13 +12,7 @@ exports.newMessage = async (message) => {
     message.sender = sender._id;
     message.recipient = recipient._id;
     await MessageModel.create(message);
-
-    await UsersModel.findByIdAndUpdate(sender._id, {
-      $addToSet: { contacts: recipient._id  },
-    });
-    await UsersModel.findByIdAndUpdate(recipient._id, {
-      $addToSet: { contacts: sender._id },
-    });
+    addToContacts(sender, recipient)
   } catch (e) {
     console.log(e.message);
   }
