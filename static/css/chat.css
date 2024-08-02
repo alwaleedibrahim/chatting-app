@@ -31,6 +31,8 @@ nav {
 .header h1 span {
   color: var(--dark-green);
   font-size: larger;
+  font-weight: bolder;
+  margin-right: 3px;
 }
 .header img {
   width: 40px;
@@ -67,7 +69,7 @@ nav {
   overflow-x: clip;
   background-image: url("../images/pattern.jpg");
   background-repeat: repeat;
-  background-size: 60%;
+  background-size:500px;
 }
 .contact-container {
   height: 92vh;
